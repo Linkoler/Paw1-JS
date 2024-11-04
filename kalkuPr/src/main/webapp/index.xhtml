@@ -15,17 +15,26 @@
 			<p:messages id="msg" />
 
 			<h:form>
-				<h:panelGrid columns="2" cellpadding="5" styleClass="bottom-space">
+				<h:panelGrid columns="3" cellpadding="5" styleClass="bottom-space">
 					<p:outputLabel for="idx" value="kwota:" />
-					<p:inputText id="idx" value="#{calcBB.x}" />
+					<p:inputText id="idx" value="#{calcBB.x}" required = "true" requiredMessage="Musisz podać kwote." converterMessage="Kwota musi być lczbą." validatorMessage="Kwota musi być liczbą dodatnią.">
+					<f:validateLongRange minimum="1"/>
+					</p:inputText>
+					<p:message for="idx"/>
 					
 					<p:outputLabel for="idy" value="liczba lat:" />
-					<p:inputText id="idy" value="#{calcBB.y}" />
+					<p:inputText id="idy" value="#{calcBB.y}" required = "true" requiredMessage="Musisz podać liczbę lat." converterMessage="Liczba lat musi być lczbą." validatorMessage="Liczba lat musi być liczbą dodatnią.">
+					<f:validateLongRange minimum="1"/>
+					</p:inputText>
+					<p:message for="idy"/>
 					
 					<p:outputLabel for="idz" value="oprocętowanie:" />
-					<p:inputText id="idz" value="#{calcBB.z}" />
+					<p:inputText id="idz" value="#{calcBB.z}" required = "true" requiredMessage="Musisz podać oprocętowanie." converterMessage="Oprocętowanie musi być lczbą." validatorMessage="Oprocętowanie musi być liczbą dodatnią.">
+					<f:validateLongRange minimum="1"/>
+					</p:inputText>
+					<p:message for="idz"/>
 					
-					<p:commandButton value="Dodaj" action="#{calcBB.calc()}" update="msg" />
+					<p:commandButton value="Oblicz" action="#{calcBB.calc()}" update="msg" />
 				</h:panelGrid>
 				<p:commandLink value="Informacje" action="#{calcBB.info()}" />
 			</h:form>

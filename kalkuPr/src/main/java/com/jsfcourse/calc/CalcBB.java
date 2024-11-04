@@ -9,35 +9,35 @@ import jakarta.inject.Named;
 @Named
 @RequestScoped
 public class CalcBB {
-	private String x;
-	private String y;
-	private String z;
+	private Double x;
+	private Double y;
+	private Double z;
 	private Double result;
 
 	@Inject
 	FacesContext ctx;
 	
-	public String getX() {
+	public Double getX() {
 		return x;
 	}
 
-	public void setX(String x) {
+	public void setX(Double x) {
 		this.x = x;
 	}
 
-	public String getY() {
+	public Double getY() {
 		return y;
 	}
 
-	public void setY(String y) {
+	public void setY(Double y) {
 		this.y = y;
 	}
 	
-	public String getZ() {
+	public Double getZ() {
 		return z;
 	}
 
-	public void setZ(String z) {
+	public void setZ(Double z) {
 		this.z = z;
 	}
 
@@ -47,9 +47,7 @@ public class CalcBB {
 
 	public String calc() {
 		try {
-			double x = Double.parseDouble(this.x); 
-			double y = Double.parseDouble(this.y); 
-			double z = Double.parseDouble(this.z); 
+			
 
 			double mies = y * 12;
 			double proc = (z / 100) / 12;
