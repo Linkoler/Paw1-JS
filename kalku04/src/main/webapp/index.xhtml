@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/main-template.xhtml">
+
+	<ui:define name="content">
+
+		<p:panel header="Wprowadz kwotę, liczbę lat i oprocętowanie(np.2)">
+
+			<p:messages id="msg" />
+
+			<h:form>
+				<h:panelGrid columns="3" cellpadding="5" styleClass="bottom-space">
+					<p:outputLabel for="idx" value="kwota:" />
+					<p:inputText id="idx" value="#{calcBB.x}" required = "true" requiredMessage="Musisz podać kwote." converterMessage="Kwota musi być lczbą." validatorMessage="Kwota musi być liczbą dodatnią.">
+					<f:validateLongRange minimum="1"/>
+					</p:inputText>
+					<p:message for="idx"/>
+					
+					<p:outputLabel for="idy" value="liczba lat:" />
+					<p:inputText id="idy" value="#{calcBB.y}" required = "true" requiredMessage="Musisz podać liczbę lat." converterMessage="Liczba lat musi być lczbą." validatorMessage="Liczba lat musi być liczbą dodatnią.">
+					<f:validateLongRange minimum="1"/>
+					</p:inputText>
+					<p:message for="idy"/>
+					
+					<p:outputLabel for="idz" value="oprocętowanie:" />
+					<p:inputText id="idz" value="#{calcBB.z}" required = "true" requiredMessage="Musisz podać oprocętowanie." converterMessage="Oprocętowanie musi być lczbą." validatorMessage="Oprocętowanie musi być liczbą dodatnią.">
+					<f:validateLongRange minimum="1"/>
+					</p:inputText>
+					<p:message for="idz"/>
+					
+					<p:commandButton value="Oblicz" action="#{calcBB.calc()}" update="msg" />
+				</h:panelGrid>
+			</h:form>
+
+			<h:form>
+			<p:commandLink value="Informacje" action="#{calcBB.info()}" />
+			</h:form>
+
+		</p:panel>
+
+	</ui:define>
+
+</ui:composition>
+</html>
