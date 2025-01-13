@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/main-template.xhtml">
+        <ui:define name="title">Admin</ui:define>
+        <ui:define name="content">
+            <h:form id="userSearchForm">
+                <p:panel header="Wyszukaj osobę" style="margin-bottom: 20px;">
+                    <h:panelGrid columns="3" cellpadding="5">
+                        <h:outputLabel value="Nazwisko:" for="personName" />
+                        <p:inputText id="personName" value="#{userListBB.lastName}" />
+                        <p:commandButton value="Szukaj" update="userListForm:userTable" action="#{userListBB.getList}" />
+                    </h:panelGrid>
+                </p:panel>
+            </h:form>
+
+            <h:form id="userListForm">
+                <p:dataTable id="userTable" value="#{userListBB.list}" var="user"
+                             paginator="true"  rowsPerPageTemplate="6,12,16" rows="12"  emptyMessage="Brak osób do wyświetlenia.">
+                    <p:column headerText="Nazwisko" >
+                        <h:outputText value="#{user.lastName}" />
+                    </p:column>
+                    <p:column headerText="Imię">
+                        <h:outputText value="#{user.name}" />
+                    </p:column>
+                    <p:column headerText="Mail">
+                        <h:outputText value="#{user.mail}" />
+                    </p:column>
+                    <p:column headerText="Rola">
+                        <h:outputText value=" " />
+                    </p:column>
+                    <p:column headerText=" ">
+                    <p:commandButton value="Edycja" action=" "/>
+                </p:column>
+                <p:column headerText=" ">
+                    <p:commandButton value="Usuń" action=" "/>
+                </p:column>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

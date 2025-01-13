@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/main-template.xhtml">
+
+    <ui:define name="title">#{produktListBB.selectedProduct.name}</ui:define>
+
+    <ui:define name="content">
+        <h:form id="productDetailForm">
+    <h1>Details for #{produktListBB.selectedProduct.name}</h1>
+    <h:panelGrid columns="2">
+        <h:outputLabel value="Nazwa" />
+        <h:outputText value="#{produktListBB.selectedProduct.name}" />
+
+        <h:outputLabel value="Opis" />
+        <h:outputText value="#{produktListBB.selectedProduct.description}" />
+
+        <h:outputLabel value="Cena" />
+        <h:outputText value="#{produktListBB.selectedProduct.price} zł" />
+
+        <h:outputLabel value="Typ" />
+        <h:outputText value="#{produktListBB.selectedProduct.type}" />
+
+        <h:outputLabel value="Zdjęcie" />
+        <h:graphicImage value="/resources/template/imgPro/#{produktListBB.selectedProduct.photoName}" />
+    </h:panelGrid>
+
+    <p:commandButton value="Powrót do listy" action="produkty.xhtml?faces-redirect=true"/>
+</h:form>
+
+    </ui:define>
+
+</ui:composition>
+</html>
