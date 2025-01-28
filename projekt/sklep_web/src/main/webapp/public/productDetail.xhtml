@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/main-template.xhtml">
+
+    <ui:define name="title">#{produktListBB.selectedProduct.name}</ui:define>
+
+    <ui:define name="content">
+        <h:form id="productDetailForm" >
+   <div style="background-color: #f2f2f2; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        
+    <h:panelGrid columns="2" styleClass="product-detail-grid">
+    
+    	<h:outputLabel value=" " />
+        <h:graphicImage value="/resources/template/imgPro/#{produktListBB.selectedProduct.photoName}" />
+    
+        <h:outputLabel value="Nazwa" />
+        <h:outputText value="#{produktListBB.selectedProduct.name}" />
+
+        <h:outputLabel value="Opis" />
+        <h:outputText value="#{produktListBB.selectedProduct.description}" />
+
+        <h:outputLabel value="Cena" />
+        <h:outputText value="#{produktListBB.selectedProduct.price} zł" />
+
+        <h:outputLabel value="Typ produktu:" />
+		<h:outputText value="#{produktListBB.selectedProduct.type.name}" />
+    </h:panelGrid>
+</div>
+<h:panelGroup>
+           <p:commandButton value="Dodaj do koszyka" action="#{koszykBB.addToKoszyk(produktListBB.selectedProduct)}" update="@form" style="margin-top: 20px; background-color: green; color: white; border-radius: 5px; padding: 10px;" icon="pi pi-shopping-cart" rendered="#{not empty sessionScope['remoteClient']}" />
+                <h:outputText 
+                    value="Zaloguj się, aby kupić" 
+                    style="margin-top: 20px; color: red; font-weight: bold;" 
+                    rendered="#{empty sessionScope['remoteClient']}" />
+            </h:panelGroup>    
+            <p:commandButton value="Powrót do listy" action="produkty.xhtml?faces-redirect=true" style="margin-top: 20px; border-radius: 5px; padding: 10px;"/>
+</h:form>
+
+    </ui:define>
+
+</ui:composition>
+</html>

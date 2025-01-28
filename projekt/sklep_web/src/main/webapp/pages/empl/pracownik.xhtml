@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/main-template.xhtml">
+
+     <ui:define name="title">Lista zamowień</ui:define>
+        <ui:define name="content">
+		<h:form>
+                <p:panel header="Wyszukaj zamówienie po jego ID" style="margin-bottom: 20px;">
+                <h:outputText value="Całkowita liczba zamówień: #{orderListBB.getList().size()}" />
+                    <h:panelGrid columns="3" cellpadding="5">
+                        <h:outputLabel value="ID:" for="id" />
+                        <p:inputText id="i" value="#{orderListBB.id}" />
+                        <p:commandButton value="Szukaj" update="orderListForm:orderTable" action="#{orderListBB.searchOrders}" />
+                    </h:panelGrid>
+                </p:panel>
+			</h:form>
+            <h:form id="orderListForm">
+                <p:dataTable id="orderTable" value="#{orderListBB.list}" var="order"
+                             paginator="true"  rowsPerPageTemplate="6,12,16" rows="12"  emptyMessage="Brak zamówień do wyświetlenia.">
+                    <p:column headerText="ID zamówienia" >
+                        <h:outputText value="#{order.idZam}" />
+                    </p:column>
+                    <p:column headerText="Nazwisko klienta" >
+                        <h:outputText value="#{order.user.lastName}" />
+                    </p:column>
+                    <p:column headerText="Adres">
+                        <h:outputText value="#{order.address}" />
+                    </p:column>
+                    <p:column headerText="Kwota">
+                        <h:outputText value="#{order.amountToPay} zł" />
+                    </p:column>
+                    <p:column headerText="Szczegóły">
+    					<p:dataTable value="#{order.proOrs}" var="proOr" styleClass="nested-table">
+        			<p:column>
+            			<h:outputText value="#{proOr.product.name}, #{proOr.product.price} zł" />
+        			</p:column>
+    				</p:dataTable>
+                </p:column>
+                <p:column headerText="Potwierdź wysłanie">
+    			<h:panelGroup>
+        			<h:outputText value="Wysłano" rendered="#{order.confirmed == 1}" />
+        				<p:commandButton value="Potwierdź wysłanie" 
+                         action="#{orderListBB.confirmOrder(order)}" 
+                         update="orderListForm:orderTable" 
+                         rendered="#{order.confirmed == 0}" />
+    				</h:panelGroup>
+				</p:column>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+
+</ui:composition>
+</html>

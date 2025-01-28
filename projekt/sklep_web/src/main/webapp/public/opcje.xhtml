@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      <f:metadata>
+	<f:viewAction action="#{userEditBB.onLoad()}" />
+</f:metadata>
+
+<ui:composition template="/templates/main-template.xhtml">
+
+    <ui:define name="title">
+        Opcje.
+    </ui:define>
+    <ui:define name="content">
+        <div class="card">
+            <p:splitter style="height: 700px;" styleClass="mb-5" widgetVar="splitter" rendered="#{empty remoteClient}">
+                <p:splitterPanel styleClass="flex align-items-center justify-content-center" style="display: flex; align-items: center; justify-content: center;">
+                    <h:form>
+    				<p:linkButton outcome="login.xhtml" value="Zaloguj" style="margin-right:20px;">
+    				</p:linkButton>
+					</h:form>
+                </p:splitterPanel>
+                <p:splitterPanel styleClass="flex align-items-center justify-content-center" style="display: flex; align-items: center; justify-content: center;">
+                <h:form>
+    				<p:linkButton outcome="rejestracja.xhtml" value="Zarejestruj się" style="margin-right:20px;">
+    				</p:linkButton>
+					</h:form>
+          </p:splitterPanel>
+        </p:splitter>
+        </div>
+        <div class="card">
+        <h:form id="logout">       
+                
+               <p:panel header="Wyloguj się" style="margin-bottom: 20px;" rendered="#{remoteClient.isInRole('user') || remoteClient.isInRole('admin') || remoteClient.isInRole('empl')}">
+                   <h:panelGrid columns="2" cellpadding="5">
+                   <h:outputText value="Zalogowany: #{remoteClient.details.name} #{remoteClient.details.lastName}" />
+                   <p:commandButton value="wyloguj sie" action="#{loginBB.doLogout}" />
+                   </h:panelGrid>
+               	</p:panel>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>

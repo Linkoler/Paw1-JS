@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/main-template.xhtml">
+
+    <ui:define name="title">Koszyk</ui:define>
+
+    <ui:define name="content">
+      <h:form id="kosz">
+    <p:dataTable value="#{koszykBB.items}" var="item" style="width: 100%;">
+        <f:facet name="header">Twój koszyk:</f:facet>
+        <p:column headerText="Produkt">
+            <h:outputText value="#{item.product.name}" />
+        </p:column>
+        <p:column headerText="Cena">
+            <h:outputText value="#{item.product.price} zł" />
+        </p:column>
+        <p:column headerText="Ilość">
+            <h:outputText value="#{item.quantity}" />
+        </p:column>
+        <p:column headerText="Usuń">
+		<p:commandButton value="Usuń" action="#{koszykBB.removeFromKoszyk(item.product)}" update="kosz" process="@this" />        
+    </p:column>
+    </p:dataTable>
+     <div style="background-color: #f5f5f5; padding: 15px; margin-top: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <h:outputText value="Adres dostawy(Wymagane!):"  />
+                <h:inputText value="#{zakupBB.order.address}" required="true" style="width: 100%; margin-bottom: 10px;" />
+
+                <h:outputText value="Łączna kwota: #{koszykBB.total} zł"  />
+            </div>
+            <p:commandButton value="Zamów" action="#{zakupBB.buy}" update="kosz" style="margin-top: 15px;" />
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+</html>

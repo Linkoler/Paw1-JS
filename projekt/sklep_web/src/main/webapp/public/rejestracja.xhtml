@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+    <f:viewAction action="#{userEditBB.onLoad()}" />
+</f:metadata>
+
+<ui:composition template="/templates/main-template.xhtml">
+    <ui:define name="title">Rejestracja</ui:define>
+    <ui:define name="content">
+        <div class="card">
+
+            <h:form id="form-registration">
+                <p:panel header="Formularz rejestracyjny">
+                    <h:panelGrid columns="1" cellpadding="5" style="width: 100;">
+
+                        <h:outputLabel for="usName" value="Imię:" />
+                        <p:inputText id="usName" 
+                                     value="#{userEditBB.user.name}" 
+                                     required="true" 
+                                     requiredMessage="Podaj imię:"
+                                     validatorMessage="Za dużo znaków">
+                            <f:validateLength maximum="15" />
+                        </p:inputText>
+
+                        <h:outputLabel for="usLastName" value="Nazwisko:" />
+                        <p:inputText id="usLastName" 
+                                     value="#{userEditBB.user.lastName}" 
+                                     required="true" 
+                                     requiredMessage="Podaj nazwisko:"
+                                     validatorMessage="Za dużo znaków">
+                            <f:validateLength maximum="20" />
+                        </p:inputText>
+
+                        <h:outputLabel for="usMail" value="Login:" />
+                        <p:inputText id="usMail" 
+                                     value="#{userEditBB.user.mail}" 
+                                     required="true" 
+                                     requiredMessage="Podaj login:"
+                                     validatorMessage="Za dużo znaków">
+                            <f:validateLength maximum="30" />
+                        </p:inputText>
+
+                        <h:outputLabel for="usPassword" value="Hasło:" />
+                        <p:password id="usPassword" 
+                                    value="#{userEditBB.user.password}" 
+                                    required="true" 
+                                    requiredMessage="Podaj hasło:"
+                                    validatorMessage="Za dużo znaków">
+                            <f:validateLength minimum="8" maximum="30" />
+                        </p:password>
+
+                    </h:panelGrid>
+                    <p:messages id="msg" />
+                </p:panel>
+
+                <p:commandButton value="Rejestracja" 
+                                 action="#{userEditBB.saveData()}" 
+                                 update="msg" 
+                                 style="margin-top: 10px;" />
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>

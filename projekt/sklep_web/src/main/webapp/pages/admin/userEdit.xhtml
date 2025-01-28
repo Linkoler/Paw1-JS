@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      <f:metadata>
+	<f:viewAction action="#{userEditBB.onLoad()}" />
+</f:metadata>
+
+<ui:composition template="/templates/main-template.xhtml">
+
+    <ui:define name="title">
+        Edytor
+    </ui:define>
+    <ui:define name="content">
+	<div class="card">
+	<p:panel toggleable="true" header="Edycja rekordu">
+
+		<h:form rendered="#{userEditBB.user != null}">
+			<h:panelGrid columns="3" cellpadding="5" style="width: 100;">
+
+				<h:outputLabel for="p-name" value="imię:" />
+				<p:inputText id="p-name" value="#{userEditBB.user.name}"
+					required="true" requiredMessage="Podaj imię"
+					validatorMessage="co najwyżej 40 znaków">
+					<f:validateLength maximum="40" />
+				</p:inputText>
+				<p:message for="p-name" display="icon"/>
+
+				<h:outputLabel for="p-surname" value="nazwisko:" />
+				<p:inputText id="p-surname" value="#{userEditBB.user.lastName}"
+					required="true" requiredMessage="podaj nazwisko"
+					validatorMessage="co najwyżej 40 znaków">
+					<f:validateLength maximum="40" />
+				</p:inputText>
+				<p:message for="p-surname" display="icon"/>
+
+				<h:outputLabel for="p-mail" value="mail:" />
+				<p:inputText id="p-mail" value="#{userEditBB.user.mail}"
+					required="true" requiredMessage="wpisz nowy mail"
+					>
+			    </p:inputText>
+				<p:message for="p-mail" display="icon"/>
+				
+				<h:outputLabel for="p-role" value="Rola:" />
+<p:dataTable id="p-role" value="#{userEditBB.user.usRos}" var="usRo" 
+             editable="true" editMode="cell">
+    <p:ajax event="cellEdit" listener="#{userEditBB.onCellEdit}"  />
+    <p:column headerText="rola (do wyboru jest: empl, user):">
+        <p:cellEditor>
+            <f:facet name="output">
+                <h:outputText value="#{usRo.role.roleName}" />
+            </f:facet>
+            <f:facet name="input">
+                <p:selectOneMenu value="#{usRo.role.roleName}">
+                    <f:selectItem itemLabel="Wybierz rolę" itemValue="" />
+                    <f:selectItem itemLabel="empl" itemValue="empl" />
+                    <f:selectItem itemLabel="user" itemValue="user" />
+                </p:selectOneMenu>
+            </f:facet>
+        </p:cellEditor>
+    </p:column>
+</p:dataTable>
+
+<p:message for="p-role" display="icon" />
+
+			</h:panelGrid>
+
+			<p:messages id="msg" value="zapisano"/>
+
+			<p:commandButton value="Zapisz" action="#{userEditBB.saveData()}"
+				style="margin-right: 1em;" update="@form"/>
+			<p:commandButton value="anuluj" action="/pages/admin/adminPg.xhtml"
+				style="margin-right: 1em;"/>
+			
+
+		</h:form>
+
+	</p:panel>
+
+ </div>
+    </ui:define>
+</ui:composition>
+</html>

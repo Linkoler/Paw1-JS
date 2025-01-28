@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="/templates/main-template.xhtml">
+    <ui:define name="title">Kategorie</ui:define>
+    <ui:define name="content">
+    
+        <h:form id="productSearchForm">
+            <p:panel header="Wyszukaj produkty" style="margin-bottom: 20px;">
+                <h:panelGrid columns="3" cellpadding="5">
+                    <h:outputLabel value="Nazwa produktu:" for="productName" />
+                    <p:inputText id="productName" value="#{produktListBB.name}" />
+                    <p:commandButton value="Szukaj" 
+                 update="productListForm:productTable" 
+                 actionListener="#{produktListBB.getList}" />
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+        
+        <h:form id="sortForm">
+            <p:panel header="Opcje sortowania" style="margin-bottom: 20px;">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel value="Typ produktu:" for="productType" />
+                    <p:selectOneMenu id="productType" value="#{produktListBB.typeId}">
+    <f:selectItem itemLabel="Wszystkie" itemValue="#{null}" />
+    <f:selectItems value="#{typeListBB.fullList}" var="type"
+                   itemValue="#{type.name}" itemLabel="#{type.name}" />
+</p:selectOneMenu>
+
+                </h:panelGrid>
+                <p:commandButton value="Sortuj" 
+                                 actionListener="#{produktListBB.typeSort}" 
+                                 update="productListForm:productTable" />
+            </p:panel>
+        </h:form>
+        
+        <h:form id="productListForm">
+            <p:dataTable id="productTable" value="#{produktListBB.list}" var="product" 
+                         paginator="true" rowsPerPageTemplate="6,12,16" rows="12" 
+                         emptyMessage="Brak produktów do wyświetlenia.">
+                
+                <p:column headerText="Zdjęcie">
+                    <h:graphicImage value="/resources/template/imgPro/#{product.photoName}" />
+                </p:column>
+                
+                <p:column headerText="Nazwa">
+                    <p:commandLink value="#{product.name}" 
+                                   action="#{produktListBB.viewProduct(product.idProdukty)}" />
+                </p:column>
+
+                <p:column headerText="Cena">
+                    <h:outputText value="#{product.price} zł" />
+                </p:column>
+                
+                <p:column headerText="typ">
+                    <h:outputText  value="#{product.type.name} , #{product.type.idType}" />
+                </p:column>
+                
+                <p:column headerText=" ">
+                    <p:commandButton value="Dodaj do koszyka" 
+                                     action="#{produktListBB.addToCart(product)}" 
+                                     icon="pi pi-shopping-cart" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        
+    </ui:define>
+</ui:composition>
+</html>
